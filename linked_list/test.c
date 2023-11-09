@@ -50,7 +50,7 @@ void test_ll_insert_first()
     printf("test_ll_insert_first... ");
     linked_list *list = ll_new();
     char *first_insert_str = "first";
-    node *first_new_node = ll_insert_first(list, first_insert_str);
+    ll_node *first_new_node = ll_insert_first(list, first_insert_str);
     ll_assert_null_at_ends(list);
     assert(list->head == list->tail);
     assert(list->head == first_new_node);
@@ -58,7 +58,7 @@ void test_ll_insert_first()
     assert(!strcmp(first_new_node->value, first_insert_str));
     assert(list->len == 1);
     char *last_insert_str = "last";
-    node *last_new_node = ll_insert_first(list, last_insert_str);
+    ll_node *last_new_node = ll_insert_first(list, last_insert_str);
     ll_assert_null_at_ends(list);
     assert(list->head == last_new_node);
     assert(!strcmp(list->head->value, last_insert_str));
@@ -73,7 +73,7 @@ void test_ll_insert_last()
     printf("test_ll_insert_last... ");
     linked_list *list = ll_new();
     char *first_insert_str = "first";
-    node *first_new_node = ll_insert_last(list, first_insert_str);
+    ll_node *first_new_node = ll_insert_last(list, first_insert_str);
     ll_assert_null_at_ends(list);
     assert(list->head == list->tail);
     assert(list->tail == first_new_node);
@@ -81,7 +81,7 @@ void test_ll_insert_last()
     assert(!strcmp(first_new_node->value, first_insert_str));
     assert(list->len == 1);
     char *last_insert_str = "last";
-    node *last_new_node = ll_insert_last(list, last_insert_str);
+    ll_node *last_new_node = ll_insert_last(list, last_insert_str);
     ll_assert_null_at_ends(list);
     assert(list->tail == last_new_node);
     assert(!strcmp(list->tail->value, last_insert_str));
@@ -96,19 +96,19 @@ void test_ll_insert_at()
     printf("test_ll_insert_at... ");
     linked_list *list = ll_new();
     char *first_value = "first";
-    node *first_node = ll_insert_at(list, 0, first_value);
+    ll_node *first_node = ll_insert_at(list, 0, first_value);
     assert(first_node == list->head);
     assert(first_node == list->tail);
     assert(!strcmp(first_node->value, first_value));
     assert(list->len == 1);
     char *last_value = "last";
-    node *last_node = ll_insert_at(list, 1, last_value);
+    ll_node *last_node = ll_insert_at(list, 1, last_value);
     assert(last_node == list->tail);
     assert(last_node == first_node->next);
     assert(!strcmp(last_node->value, last_value));
     assert(list->len == 2);
     char *mid_value = "mid";
-    node *mid_node = ll_insert_at(list, 1, mid_value);
+    ll_node *mid_node = ll_insert_at(list, 1, mid_value);
     assert(mid_node == first_node->next);
     assert(mid_node == last_node->prev);
     assert(mid_node->prev == first_node);
@@ -200,8 +200,8 @@ void test_ll_get_at()
     printf("test_ll_get_at... ");
     char *array[] = {"first", "mid", "last"};
     linked_list *list = ll_from_array(array, 3);
-    node *mid = ll_get_at(list, 1);
-    node *last = ll_get_at(list, list->len - 1);
+    ll_node *mid = ll_get_at(list, 1);
+    ll_node *last = ll_get_at(list, list->len - 1);
     assert(mid == list->head->next);
     assert(last == list->tail);
     assert(!ll_get_at(list, 99));
@@ -216,8 +216,8 @@ void test_ll_set_at()
     linked_list *list = ll_from_array(array, 3);
     char *updated_mid_value = "updated_mid";
     char *updated_last_value = "updated_last";
-    node *updated_mid = ll_set_at(list, 1, updated_mid_value);
-    node *updated_last = ll_set_at(list, 2, updated_last_value);
+    ll_node *updated_mid = ll_set_at(list, 1, updated_mid_value);
+    ll_node *updated_last = ll_set_at(list, 2, updated_last_value);
     assert(updated_mid == list->head->next);
     assert(!strcmp(updated_mid->value, updated_mid_value));
     assert(updated_last == list->tail);
@@ -236,7 +236,7 @@ void test_ll_find_first()
     char *array[] = {"first", "mid", "last"};
     linked_list *list = ll_from_array(array, 3);
     char *search_term = "last";
-    node *search_result = ll_find_first(list, search_term);
+    ll_node *search_result = ll_find_first(list, search_term);
     assert(search_result == list->tail);
     assert(!strcmp(search_result->value, search_term));
     assert(!ll_find_first(list, "search_term"));
@@ -253,7 +253,7 @@ void test_ll_find_last()
     char *array[] = {"first", "mid", "last"};
     linked_list *list = ll_from_array(array, 3);
     char *search_term = "first";
-    node *search_result = ll_find_last(list, search_term);
+    ll_node *search_result = ll_find_last(list, search_term);
     assert(search_result == list->head);
     assert(!strcmp(search_result->value, search_term));
     assert(!ll_find_last(list, "search_term"));
