@@ -79,3 +79,47 @@ char *vec_remove(vec *vector, size_t index) {
     vector->len--;
     return removed;
 }
+
+void vec_display(vec *vector) {
+    if (vector->len == 0) {
+        printf("[]\n");
+        return;
+    }
+
+    printf("[");
+
+    for (size_t i = 0; i < vector->len - 1; i++)
+        printf("%s, ", vec_get(vector, i));
+
+    printf("%s]\n", vec_get(vector, vector->len - 1));
+}
+
+static void vec_swap(vec *vector, size_t left, size_t right) {
+    if (left >= vector->len || right >= vector->len || left == right)
+        return;
+
+    char *temp = vector->elems[left];
+    vector->elems[left] = vector->elems[right];
+    vector->elems[right] = temp;
+}
+
+static size_t vec_min_index_at_range(vec *vector, size_t left, size_t right) {
+    if (left == right)
+        return left;
+
+    size_t min_index = left;
+
+    for (size_t i = left; i <= right; i++) {
+        if (strcmp(vector->elems[i], vector->elems[min_index]) < 0)
+            min_index = i;
+    }
+
+    return min_index;
+}
+
+void vec_selection_sort(vec *vector) {
+    for (size_t left = 0; left < vector->len; left++) {
+        size_t min_index = vec_min_index_at_range(vector, left, vector->len - 1);
+        vec_swap(vector, left, min_index);
+    }
+}

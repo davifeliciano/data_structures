@@ -1,4 +1,5 @@
 #include "hash_table.h"
+#include "utils.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,17 +18,6 @@ void assert_ht_emptiness(hash_table *ht)
 {
     for (size_t i = 0; i < ht->capacity; i++)
         assert(!ht->lookup_table[i] || !ht->lookup_table[i]->root);
-}
-
-char *generate_random_word(size_t word_len)
-{
-    char *word = malloc((word_len + 1) * sizeof(char));
-
-    for (size_t i = 0; i < word_len; i++)
-        word[i] = (char)(26 * (rand() / (RAND_MAX + 1.0)) + 97);
-
-    word[word_len] = '\0';
-    return word;
 }
 
 char **generate_random_word_list(size_t len, size_t word_len)

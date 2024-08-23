@@ -20,5 +20,7 @@ char *vec_get(vec* vector, size_t index);
 char *vec_append(vec* vector, char *value);
 char *vec_pop(vec *vector);
 char *vec_remove(vec *vector, size_t index);
+void vec_display(vec *vector);
+void vec_selection_sort(vec *vector);
 
 #endif

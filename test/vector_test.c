@@ -1,8 +1,11 @@
 #include "vector.h"
+#include "utils.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define WORD_LEN 8
 
 void test_vec_append() {
     printf("test_vec_append... ");
@@ -12,11 +15,12 @@ void test_vec_append() {
 
     for (size_t i = 0; i < MIN_CAPACITY + 1; i++)
     {
-        char value = (char) i;
-        char *appended = vec_append(vector, &value);
-        assert(!strcmp(appended, &value));
+        char *value = generate_random_word(WORD_LEN);
+        char *appended = vec_append(vector, value);
+        assert(!strcmp(appended, value));
         assert(!strcmp(appended, vector->elems[i]));
         assert(vector->len == i + 1);
+        free(value);
     }
 
     assert(vector->len == MIN_CAPACITY + 1);
@@ -30,11 +34,12 @@ void test_vec_get() {
     vec *vector = vec_new();
 
     for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
-        char value = (char) i;
-        char *appended = vec_append(vector, &value);
+        char *value = generate_random_word(WORD_LEN);
+        char *appended = vec_append(vector, value);
         char *got = vec_get(vector, i);
         assert(got);
         assert(appended == got);
+        free(value);
     }
 
     char *absent = vec_get(vector, vector->len);
@@ -48,8 +53,9 @@ void test_vec_clone() {
     vec *vector = vec_new();
 
     for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
-        char value = (char) i;
-        vec_append(vector, &value);
+        char *value = generate_random_word(WORD_LEN);
+        vec_append(vector, value);
+        free(value);
     }
 
     vec *clone = vec_clone(vector);
@@ -86,8 +92,9 @@ void test_vec_remove() {
     vec *vector = vec_new();
 
     for (size_t i = 0; i < MIN_CAPACITY; i++) {
-        char value = (char) i;
-        vec_append(vector, &value);
+        char *value = generate_random_word(WORD_LEN);
+        vec_append(vector, value);
+        free(value);
     }
 
     assert(!vec_remove(vector, vector->len));
@@ -112,6 +119,27 @@ void test_vec_remove() {
     printf("ok!\n");
 }
 
+void test_vec_selection_sort() {
+    printf("test_vec_selection_sort... ");
+    vec *vector = vec_new();
+
+    for (size_t i = 0; i < MIN_CAPACITY; i++) {
+        char *value = generate_random_word(WORD_LEN);
+        vec_append(vector, value);
+        free(value);
+    }
+
+    vec *sorted = vec_clone(vector);
+    vec_selection_sort(sorted);
+
+    for (size_t i = 0; i < sorted->len - 1; i++)
+        assert(strcmp(vec_get(sorted, i), vec_get(sorted, i + 1)) <= 0);
+
+    vec_free(vector);
+    vec_free(sorted);
+    printf("ok!\n");
+}
+
 int main(int argc, char **argv)
 {
     test_vec_append();
@@ -119,5 +147,6 @@ int main(int argc, char **argv)
     test_vec_clone();
     test_vec_pop();
     test_vec_remove();
+    test_vec_selection_sort();
     return 0;
 }
