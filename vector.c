@@ -123,3 +123,17 @@ void vec_selection_sort(vec *vector) {
         vec_swap(vector, left, min_index);
     }
 }
+
+void vec_insertion_sort(vec *vector) {
+    for (int i = 1; i < vector->len; i++) {
+        char *key = vector->elems[i];
+        int j = i - 1;
+
+        while (j >= 0 && strcmp(vector->elems[j], key) > 0) {
+            vector->elems[j + 1] = vector->elems[j];
+            j--;
+        }
+
+        vector->elems[j + 1] = key;
+    }
+}

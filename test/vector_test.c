@@ -87,16 +87,18 @@ void test_vec_pop() {
     printf("ok!\n");
 }
 
-void test_vec_remove() {
-    printf("test_vec_remove... ");
-    vec *vector = vec_new();
-
-    for (size_t i = 0; i < MIN_CAPACITY; i++) {
+void init_rand_vector(vec *vector, size_t len) {
+    for (size_t i = 0; i < len; i++) {
         char *value = generate_random_word(WORD_LEN);
         vec_append(vector, value);
         free(value);
     }
+}
 
+void test_vec_remove() {
+    printf("test_vec_remove... ");
+    vec *vector = vec_new();
+    init_rand_vector(vector, MIN_CAPACITY);
     assert(!vec_remove(vector, vector->len));
 
     for (size_t i = 0; i < MIN_CAPACITY - 1; i++) {
@@ -119,22 +121,30 @@ void test_vec_remove() {
     printf("ok!\n");
 }
 
+void assert_vector_is_sorted(vec *vector) {
+    for (size_t i = 0; i < vector->len - 1; i++)
+        assert(strcmp(vec_get(vector, i), vec_get(vector, i + 1)) <= 0);
+}
+
 void test_vec_selection_sort() {
     printf("test_vec_selection_sort... ");
     vec *vector = vec_new();
-
-    for (size_t i = 0; i < MIN_CAPACITY; i++) {
-        char *value = generate_random_word(WORD_LEN);
-        vec_append(vector, value);
-        free(value);
-    }
-
+    init_rand_vector(vector, MIN_CAPACITY);
     vec *sorted = vec_clone(vector);
     vec_selection_sort(sorted);
+    assert_vector_is_sorted(sorted);
+    vec_free(vector);
+    vec_free(sorted);
+    printf("ok!\n");
+}
 
-    for (size_t i = 0; i < sorted->len - 1; i++)
-        assert(strcmp(vec_get(sorted, i), vec_get(sorted, i + 1)) <= 0);
-
+void test_vec_insertion_sort() {
+    printf("test_vec_insertion_sort... ");
+    vec *vector = vec_new();
+    init_rand_vector(vector, MIN_CAPACITY);
+    vec *sorted = vec_clone(vector);
+    vec_insertion_sort(sorted);
+    assert_vector_is_sorted(sorted);
     vec_free(vector);
     vec_free(sorted);
     printf("ok!\n");
@@ -148,5 +158,6 @@ int main(int argc, char **argv)
     test_vec_pop();
     test_vec_remove();
     test_vec_selection_sort();
+    test_vec_insertion_sort();
     return 0;
 }
