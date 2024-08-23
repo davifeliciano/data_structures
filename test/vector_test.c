@@ -43,6 +43,30 @@ void test_vec_get() {
     printf("ok!\n");
 }
 
+void test_vec_clone() {
+    printf("test_vec_clone... ");
+    vec *vector = vec_new();
+
+    for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
+        char value = (char) i;
+        vec_append(vector, &value);
+    }
+
+    vec *clone = vec_clone(vector);
+    assert(clone->capacity == vector->capacity);
+    assert(clone->len == vector->len);
+
+    for (size_t i = 0; i < clone->len; i++) {
+        char *vector_elem = vec_get(vector, i);
+        char *clone_elem = vec_get(clone, i);
+        assert(!strcmp(vector_elem, clone_elem));
+    }
+
+    vec_free(vector);
+    vec_free(clone);
+    printf("ok!\n");
+}
+
 void test_vec_pop() {
     printf("test_vec_pop... ");
     vec *vector = vec_new();
@@ -92,6 +116,7 @@ int main(int argc, char **argv)
 {
     test_vec_append();
     test_vec_get();
+    test_vec_clone();
     test_vec_pop();
     test_vec_remove();
     return 0;

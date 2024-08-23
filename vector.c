@@ -20,6 +20,18 @@ void vec_free(vec *vector) {
     free(vector);
 };
 
+vec *vec_clone(vec *vector) {
+    vec *clone = vec_new();
+    clone->capacity = vector->capacity;
+    clone->len = vector->len;
+    clone->elems = realloc(clone->elems, vector->capacity * sizeof(char *));
+
+    for (size_t i = 0; i < vector->len; i++)
+        clone->elems[i] = strdup(vector->elems[i]);
+
+    return clone;
+}
+
 char *vec_get(vec* vector, size_t index) {
     if (index >= vector->len)
         return NULL;
