@@ -14,11 +14,11 @@ linked_list *ll_new()
 
 void ll_free(linked_list *list)
 {
-    node *cur = list->head;
+    ll_node *cur = list->head;
 
     while (cur)
     {
-        node *next = cur->next;
+        ll_node *next = cur->next;
         free(cur->value);
         free(cur);
         cur = next;
@@ -37,9 +37,9 @@ linked_list *ll_from_array(char **arr, size_t len)
     return list;
 }
 
-node *ll_insert_first(linked_list *list, char *value)
+ll_node *ll_insert_first(linked_list *list, char *value)
 {
-    node *new_node = malloc(sizeof(struct node));
+    ll_node *new_node = malloc(sizeof(struct ll_node));
     new_node->value = strdup(value);
     new_node->prev = NULL;
     new_node->next = list->head;
@@ -55,9 +55,9 @@ node *ll_insert_first(linked_list *list, char *value)
     return new_node;
 }
 
-node *ll_insert_last(linked_list *list, char *value)
+ll_node *ll_insert_last(linked_list *list, char *value)
 {
-    node *new_node = malloc(sizeof(struct node));
+    ll_node *new_node = malloc(sizeof(struct ll_node));
     new_node->value = strdup(value);
     new_node->prev = list->tail;
     new_node->next = NULL;
@@ -73,7 +73,7 @@ node *ll_insert_last(linked_list *list, char *value)
     return new_node;
 }
 
-node *ll_insert_at(linked_list *list, size_t index, char *value)
+ll_node *ll_insert_at(linked_list *list, size_t index, char *value)
 {
     if (index > list->len)
         return NULL;
@@ -84,14 +84,14 @@ node *ll_insert_at(linked_list *list, size_t index, char *value)
     if (index == list->len)
         return ll_insert_last(list, value);
 
-    node *cur = list->head->next;
+    ll_node *cur = list->head->next;
     size_t cur_index = 1;
 
     while (cur)
     {
         if (cur_index == index)
         {
-            node *new_node = malloc(sizeof(struct node));
+            ll_node *new_node = malloc(sizeof(struct ll_node));
             new_node->value = strdup(value);
             new_node->prev = cur->prev;
             new_node->next = cur;
@@ -113,9 +113,9 @@ char *ll_remove_first(linked_list *list)
     if (!list->head)
         return NULL;
 
-    node *head = list->head;
+    ll_node *head = list->head;
     char *head_value = head->value;
-    node *head_next = head->next;
+    ll_node *head_next = head->next;
 
     if (head_next)
         head_next->prev = NULL;
@@ -133,9 +133,9 @@ char *ll_remove_last(linked_list *list)
     if (!list->tail)
         return NULL;
 
-    node *tail = list->tail;
+    ll_node *tail = list->tail;
     char *tail_value = list->tail->value;
-    node *tail_prev = list->tail->prev;
+    ll_node *tail_prev = list->tail->prev;
 
     if (tail_prev)
         tail_prev->next = NULL;
@@ -159,7 +159,7 @@ char *ll_remove_at(linked_list *list, size_t index)
     if (index == list->len - 1)
         return ll_remove_last(list);
 
-    node *cur = list->head->next;
+    ll_node *cur = list->head->next;
     size_t cur_index = 1;
 
     while (cur)
@@ -184,12 +184,12 @@ char *ll_remove_at(linked_list *list, size_t index)
     return NULL;
 }
 
-node *ll_get_at(linked_list *list, size_t index)
+ll_node *ll_get_at(linked_list *list, size_t index)
 {
     if (index >= list->len)
         return NULL;
 
-    node *cur = list->head;
+    ll_node *cur = list->head;
     size_t cur_index = 0;
 
     while (cur)
@@ -202,12 +202,12 @@ node *ll_get_at(linked_list *list, size_t index)
     }
 }
 
-node *ll_set_at(linked_list *list, size_t index, char *value)
+ll_node *ll_set_at(linked_list *list, size_t index, char *value)
 {
     if (index >= list->len)
         return NULL;
 
-    node *cur = list->head;
+    ll_node *cur = list->head;
     size_t cur_index = 0;
 
     while (cur)
@@ -224,12 +224,12 @@ node *ll_set_at(linked_list *list, size_t index, char *value)
     }
 }
 
-node *ll_find_first(linked_list *list, char *value)
+ll_node *ll_find_first(linked_list *list, char *value)
 {
     if (!list->head)
         return NULL;
 
-    node *cur = list->head;
+    ll_node *cur = list->head;
 
     while (cur)
     {
@@ -242,12 +242,12 @@ node *ll_find_first(linked_list *list, char *value)
     return NULL;
 }
 
-node *ll_find_last(linked_list *list, char *value)
+ll_node *ll_find_last(linked_list *list, char *value)
 {
     if (!list->tail)
         return NULL;
 
-    node *cur = list->tail;
+    ll_node *cur = list->tail;
 
     while (cur)
     {
@@ -262,7 +262,7 @@ node *ll_find_last(linked_list *list, char *value)
 
 void ll_display(linked_list *list)
 {
-    node *cur = list->head;
+    ll_node *cur = list->head;
 
     if (!cur)
     {
