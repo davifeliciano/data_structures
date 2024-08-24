@@ -1,7 +1,6 @@
 #include <stdlib.h>
 
-char *generate_random_word(size_t word_len)
-{
+char *generate_random_word(size_t word_len) {
     char *word = malloc((word_len + 1) * sizeof(char));
 
     for (size_t i = 0; i < word_len; i++)

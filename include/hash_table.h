@@ -6,10 +6,9 @@
 #define HASH_TABLE
 
 #define MIN_CAPACITY 8
-#define MAX_CAPACITY ((size_t)-1)
+#define MAX_CAPACITY ((size_t) - 1)
 
-typedef struct hash_table
-{
+typedef struct hash_table {
     size_t capacity;
     size_t len;
     bst **lookup_table;

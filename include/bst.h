@@ -3,21 +3,18 @@
 #ifndef BST
 #define BST
 
-typedef struct bst
-{
+typedef struct bst {
     struct bst_node *root;
 } bst;
 
-typedef struct bst_node
-{
+typedef struct bst_node {
     struct bst_node *parent;
     struct bst_node *left;
     struct bst_node *right;
     struct bst_entry *entry;
 } bst_node;
 
-typedef struct bst_entry
-{
+typedef struct bst_entry {
     char *key;
     char *value;
 } bst_entry;

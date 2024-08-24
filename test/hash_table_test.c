@@ -6,22 +6,19 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_UINT64_T ((uint64_t)-1)
+#define MAX_UINT64_T ((uint64_t) - 1)
 
-void assert_ht_lookup_table_emptiness(hash_table *ht)
-{
+void assert_ht_lookup_table_emptiness(hash_table *ht) {
     for (size_t i = 0; i < ht->capacity; i++)
         assert(!ht->lookup_table[i]);
 }
 
-void assert_ht_emptiness(hash_table *ht)
-{
+void assert_ht_emptiness(hash_table *ht) {
     for (size_t i = 0; i < ht->capacity; i++)
         assert(!ht->lookup_table[i] || !ht->lookup_table[i]->root);
 }
 
-char **generate_random_word_list(size_t len, size_t word_len)
-{
+char **generate_random_word_list(size_t len, size_t word_len) {
     srand(time(NULL));
     char **word_list = malloc(len * sizeof(char *));
 
@@ -31,16 +28,14 @@ char **generate_random_word_list(size_t len, size_t word_len)
     return word_list;
 }
 
-void free_random_word_list(char **word_list, size_t len)
-{
+void free_random_word_list(char **word_list, size_t len) {
     for (size_t i = 0; i < len; i++)
         free(word_list[i]);
 
     free(word_list);
 }
 
-void test_ht_new()
-{
+void test_ht_new() {
     printf("test_ht_new... ");
     size_t capacity = MIN_CAPACITY;
     hash_table *ht = ht_new(capacity);
@@ -52,8 +47,7 @@ void test_ht_new()
     printf("ok!\n");
 }
 
-void test_ht_interface()
-{
+void test_ht_interface() {
     printf("test_ht_interface... ");
     size_t capacity = MIN_CAPACITY;
     hash_table *ht = ht_new(capacity);
@@ -62,14 +56,12 @@ void test_ht_interface()
     char **keys_list = generate_random_word_list(insertions, word_length);
     char **values_list = generate_random_word_list(insertions, word_length);
 
-    for (size_t i = 0; i < insertions; i++)
-    {
+    for (size_t i = 0; i < insertions; i++) {
         ht_set(ht, keys_list[i], values_list[i]);
         assert(!strcmp(ht_get(ht, keys_list[i]), values_list[i]));
     }
 
-    for (size_t i = 0; i < insertions; i++)
-    {
+    for (size_t i = 0; i < insertions; i++) {
         ht_set(ht, keys_list[i], values_list[insertions - i - 1]);
         assert(!strcmp(ht_get(ht, keys_list[i]), values_list[insertions - i - 1]));
     }
@@ -86,8 +78,7 @@ void test_ht_interface()
     printf("ok!\n");
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     test_ht_new();
     test_ht_interface();
     return 0;

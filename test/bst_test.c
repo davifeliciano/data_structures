@@ -9,8 +9,7 @@ char *keys[] = {"c", "i", "z", "a", "w", "e", "s", "u", "m"};
 char *ordered_keys[] = {"a", "c", "e", "i", "m", "s", "u", "w", "z"};
 char *value = "value";
 
-void assert_node_order(bst_node *node)
-{
+void assert_node_order(bst_node *node) {
     if (!node)
         return;
 
@@ -24,17 +23,14 @@ void assert_node_order(bst_node *node)
     assert_node_order(node->right);
 }
 
-void assert_traversal_order(bst *tree)
-{
+void assert_traversal_order(bst *tree) {
     assert_node_order(tree->root);
 }
 
-bst *create_test_tree()
-{
+bst *create_test_tree() {
     bst *tree = bst_new();
 
-    for (size_t i = 0; i < TEST_TREE_SIZE; i++)
-    {
+    for (size_t i = 0; i < TEST_TREE_SIZE; i++) {
         bst_node *inserted = bst_insert(tree, keys[i], value);
         bst_node *found = bst_find(tree, keys[i]);
         assert(inserted == found);
@@ -66,8 +62,7 @@ bst *create_test_tree()
     */
 }
 
-void test_bst_subtree_first()
-{
+void test_bst_subtree_first() {
     printf("test_bst_subtree_first... ");
     bst *tree = create_test_tree();
     assert(bst_subtree_first(tree->root) == bst_find(tree, "a"));
@@ -79,8 +74,7 @@ void test_bst_subtree_first()
     printf("ok!\n");
 }
 
-void test_bst_subtree_last()
-{
+void test_bst_subtree_last() {
     printf("test_bst_subtree_last... ");
     bst *tree = create_test_tree();
     assert(bst_subtree_last(tree->root) == bst_find(tree, "z"));
@@ -92,13 +86,11 @@ void test_bst_subtree_last()
     printf("ok!\n");
 }
 
-void test_bst_successor()
-{
+void test_bst_successor() {
     printf("test_bst_successor... ");
     bst *tree = create_test_tree();
 
-    for (size_t i = 0; i < TEST_TREE_SIZE - 1; i++)
-    {
+    for (size_t i = 0; i < TEST_TREE_SIZE - 1; i++) {
         bst_node *node = bst_find(tree, ordered_keys[i]);
         bst_node *successor = bst_successor(node);
         bst_node *found_successor = bst_find(tree, ordered_keys[i + 1]);
@@ -111,13 +103,11 @@ void test_bst_successor()
     printf("ok!\n");
 }
 
-void test_bst_predecessor()
-{
+void test_bst_predecessor() {
     printf("test_bst_predecessor... ");
     bst *tree = create_test_tree();
 
-    for (size_t i = TEST_TREE_SIZE - 1; i > 0; i--)
-    {
+    for (size_t i = TEST_TREE_SIZE - 1; i > 0; i--) {
         bst_node *node = bst_find(tree, ordered_keys[i]);
         bst_node *predecessor = bst_predecessor(node);
         bst_node *found_predecessor = bst_find(tree, ordered_keys[i - 1]);
@@ -130,14 +120,12 @@ void test_bst_predecessor()
     printf("ok!\n");
 }
 
-void test_bst_find()
-{
+void test_bst_find() {
     printf("test_bst_find... ");
     bst *tree = create_test_tree();
     bst *empty_tree = bst_new();
 
-    for (size_t i = 0; i < TEST_TREE_SIZE; i++)
-    {
+    for (size_t i = 0; i < TEST_TREE_SIZE; i++) {
         bst_node *found = bst_find(tree, keys[i]);
         assert(found);
         assert(!strcmp(found->entry->key, keys[i]));
@@ -150,8 +138,7 @@ void test_bst_find()
     printf("ok!\n");
 }
 
-void test_bst_insert()
-{
+void test_bst_insert() {
     printf("test_bst_insert... ");
     bst *tree = create_test_tree();
 
@@ -159,8 +146,7 @@ void test_bst_insert()
     char *keys_to_look_at_for_inserted[] = {"a", "e", "w", "m"};
     char *keys_to_insert[] = {"b", "d", "x", "r"};
 
-    for (size_t i = 0; i < insertions; i++)
-    {
+    for (size_t i = 0; i < insertions; i++) {
         bst_node *node = bst_find(tree, keys_to_look_at_for_inserted[i]);
         bst_node *inserted = bst_insert(tree, keys_to_insert[i], value);
         assert(!bst_insert(tree, keys_to_insert[i], value));
@@ -180,15 +166,13 @@ void test_bst_insert()
     printf("ok!\n");
 }
 
-void test_bst_update()
-{
+void test_bst_update() {
     printf("test_bst_update... ");
     bst *tree = create_test_tree();
     bst *empty_tree = bst_new();
     char *updated_value = "updated_value";
 
-    for (size_t i = 0; i < TEST_TREE_SIZE; i++)
-    {
+    for (size_t i = 0; i < TEST_TREE_SIZE; i++) {
         bst_node *updated = bst_update(tree, keys[i], updated_value);
         bst_node *found = bst_find(tree, keys[i]);
         assert(updated == found);
@@ -202,13 +186,11 @@ void test_bst_update()
     printf("ok!\n");
 }
 
-void test_bst_delete()
-{
+void test_bst_delete() {
     printf("test_bst_delete... ");
     bst *tree = create_test_tree();
 
-    for (size_t i = 0; i < TEST_TREE_SIZE; i++)
-    {
+    for (size_t i = 0; i < TEST_TREE_SIZE; i++) {
         bst_delete(tree, keys[i]);
         assert(!bst_find(tree, keys[i]));
 
@@ -221,8 +203,7 @@ void test_bst_delete()
     printf("ok!\n");
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     test_bst_subtree_first();
     test_bst_subtree_last();
     test_bst_successor();

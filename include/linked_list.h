@@ -3,15 +3,13 @@
 #ifndef LINKED_LIST
 #define LINKED_LIST
 
-typedef struct ll_node
-{
+typedef struct ll_node {
     char *value;
     struct ll_node *next;
     struct ll_node *prev;
 } ll_node;
 
-typedef struct linked_list
-{
+typedef struct linked_list {
     struct ll_node *head;
     struct ll_node *tail;
     size_t len;

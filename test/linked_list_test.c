@@ -1,23 +1,20 @@
+#include "linked_list.h"
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
-#include "linked_list.h"
 
-void ll_assert_emptiness(linked_list *list)
-{
+void ll_assert_emptiness(linked_list *list) {
     assert(!list->head);
     assert(!list->tail);
     assert(list->len == 0);
 }
 
-void ll_assert_null_at_ends(linked_list *list)
-{
+void ll_assert_null_at_ends(linked_list *list) {
     assert(!list->head->prev);
     assert(!list->tail->next);
 }
 
-void test_ll_new()
-{
+void test_ll_new() {
     printf("test_ll_new... ");
     linked_list *list = ll_new();
     ll_assert_emptiness(list);
@@ -25,8 +22,7 @@ void test_ll_new()
     printf("ok!\n");
 }
 
-void test_ll_from_array()
-{
+void test_ll_from_array() {
     printf("test_ll_from_array... ");
     char *empty_array[] = {};
     linked_list *empty_list = ll_from_array(empty_array, 0);
@@ -45,8 +41,7 @@ void test_ll_from_array()
     printf("ok!\n");
 }
 
-void test_ll_insert_first()
-{
+void test_ll_insert_first() {
     printf("test_ll_insert_first... ");
     linked_list *list = ll_new();
     char *first_insert_str = "first";
@@ -68,8 +63,7 @@ void test_ll_insert_first()
     printf("ok!\n");
 }
 
-void test_ll_insert_last()
-{
+void test_ll_insert_last() {
     printf("test_ll_insert_last... ");
     linked_list *list = ll_new();
     char *first_insert_str = "first";
@@ -91,8 +85,7 @@ void test_ll_insert_last()
     printf("ok!\n");
 }
 
-void test_ll_insert_at()
-{
+void test_ll_insert_at() {
     printf("test_ll_insert_at... ");
     linked_list *list = ll_new();
     char *first_value = "first";
@@ -120,8 +113,7 @@ void test_ll_insert_at()
     printf("ok!\n");
 }
 
-void test_ll_remove_first()
-{
+void test_ll_remove_first() {
     printf("test_ll_remove_first... ");
     linked_list *empty_list = ll_new();
     assert(!ll_remove_first(empty_list));
@@ -143,8 +135,7 @@ void test_ll_remove_first()
     printf("ok!\n");
 }
 
-void test_ll_remove_last()
-{
+void test_ll_remove_last() {
     printf("test_ll_remove_last... ");
     linked_list *empty_list = ll_new();
     assert(!ll_remove_last(empty_list));
@@ -166,8 +157,7 @@ void test_ll_remove_last()
     printf("ok!\n");
 }
 
-void test_ll_remove_at()
-{
+void test_ll_remove_at() {
     printf("test_ll_remove_at... ");
     linked_list *empty_list = ll_new();
     assert(!ll_remove_at(empty_list, 0));
@@ -195,8 +185,7 @@ void test_ll_remove_at()
     printf("ok!\n");
 }
 
-void test_ll_get_at()
-{
+void test_ll_get_at() {
     printf("test_ll_get_at... ");
     char *array[] = {"first", "mid", "last"};
     linked_list *list = ll_from_array(array, 3);
@@ -209,8 +198,7 @@ void test_ll_get_at()
     printf("ok!\n");
 }
 
-void test_ll_set_at()
-{
+void test_ll_set_at() {
     printf("test_ll_set_at... ");
     char *array[] = {"first", "mid", "last"};
     linked_list *list = ll_from_array(array, 3);
@@ -227,8 +215,7 @@ void test_ll_set_at()
     printf("ok!\n");
 }
 
-void test_ll_find_first()
-{
+void test_ll_find_first() {
     printf("test_ll_find... ");
     linked_list *empty_list = ll_new();
     assert(!ll_find_first(empty_list, "search_term"));
@@ -244,8 +231,7 @@ void test_ll_find_first()
     printf("ok!\n");
 }
 
-void test_ll_find_last()
-{
+void test_ll_find_last() {
     printf("test_ll_find_last... ");
     linked_list *empty_list = ll_new();
     assert(!ll_find_last(empty_list, "search_term"));
@@ -261,8 +247,7 @@ void test_ll_find_last()
     printf("ok!\n");
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     test_ll_new();
     test_ll_from_array();
     test_ll_insert_first();

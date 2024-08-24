@@ -1,10 +1,9 @@
+#include "linked_list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "linked_list.h"
 
-linked_list *ll_new()
-{
+linked_list *ll_new() {
     linked_list *list = malloc(sizeof(struct linked_list));
     list->head = NULL;
     list->tail = NULL;
@@ -12,12 +11,10 @@ linked_list *ll_new()
     return list;
 }
 
-void ll_free(linked_list *list)
-{
+void ll_free(linked_list *list) {
     ll_node *cur = list->head;
 
-    while (cur)
-    {
+    while (cur) {
         ll_node *next = cur->next;
         free(cur->value);
         free(cur);
@@ -27,8 +24,7 @@ void ll_free(linked_list *list)
     free(list);
 }
 
-linked_list *ll_from_array(char **arr, size_t len)
-{
+linked_list *ll_from_array(char **arr, size_t len) {
     linked_list *list = ll_new();
 
     for (size_t i = 0; i < len; i++)
@@ -37,8 +33,7 @@ linked_list *ll_from_array(char **arr, size_t len)
     return list;
 }
 
-ll_node *ll_insert_first(linked_list *list, char *value)
-{
+ll_node *ll_insert_first(linked_list *list, char *value) {
     ll_node *new_node = malloc(sizeof(struct ll_node));
     new_node->value = strdup(value);
     new_node->prev = NULL;
@@ -55,8 +50,7 @@ ll_node *ll_insert_first(linked_list *list, char *value)
     return new_node;
 }
 
-ll_node *ll_insert_last(linked_list *list, char *value)
-{
+ll_node *ll_insert_last(linked_list *list, char *value) {
     ll_node *new_node = malloc(sizeof(struct ll_node));
     new_node->value = strdup(value);
     new_node->prev = list->tail;
@@ -73,8 +67,7 @@ ll_node *ll_insert_last(linked_list *list, char *value)
     return new_node;
 }
 
-ll_node *ll_insert_at(linked_list *list, size_t index, char *value)
-{
+ll_node *ll_insert_at(linked_list *list, size_t index, char *value) {
     if (index > list->len)
         return NULL;
 
@@ -87,10 +80,8 @@ ll_node *ll_insert_at(linked_list *list, size_t index, char *value)
     ll_node *cur = list->head->next;
     size_t cur_index = 1;
 
-    while (cur)
-    {
-        if (cur_index == index)
-        {
+    while (cur) {
+        if (cur_index == index) {
             ll_node *new_node = malloc(sizeof(struct ll_node));
             new_node->value = strdup(value);
             new_node->prev = cur->prev;
@@ -108,8 +99,7 @@ ll_node *ll_insert_at(linked_list *list, size_t index, char *value)
     return NULL;
 }
 
-char *ll_remove_first(linked_list *list)
-{
+char *ll_remove_first(linked_list *list) {
     if (!list->head)
         return NULL;
 
@@ -128,8 +118,7 @@ char *ll_remove_first(linked_list *list)
     return head_value;
 }
 
-char *ll_remove_last(linked_list *list)
-{
+char *ll_remove_last(linked_list *list) {
     if (!list->tail)
         return NULL;
 
@@ -148,8 +137,7 @@ char *ll_remove_last(linked_list *list)
     return tail_value;
 }
 
-char *ll_remove_at(linked_list *list, size_t index)
-{
+char *ll_remove_at(linked_list *list, size_t index) {
     if (index >= list->len)
         return NULL;
 
@@ -162,10 +150,8 @@ char *ll_remove_at(linked_list *list, size_t index)
     ll_node *cur = list->head->next;
     size_t cur_index = 1;
 
-    while (cur)
-    {
-        if (cur_index == index)
-        {
+    while (cur) {
+        if (cur_index == index) {
             char *removed_value = cur->value;
             cur->prev->next = cur->next;
 
@@ -184,16 +170,14 @@ char *ll_remove_at(linked_list *list, size_t index)
     return NULL;
 }
 
-ll_node *ll_get_at(linked_list *list, size_t index)
-{
+ll_node *ll_get_at(linked_list *list, size_t index) {
     if (index >= list->len)
         return NULL;
 
     ll_node *cur = list->head;
     size_t cur_index = 0;
 
-    while (cur)
-    {
+    while (cur) {
         if (cur_index == index)
             return cur;
 
@@ -202,18 +186,15 @@ ll_node *ll_get_at(linked_list *list, size_t index)
     }
 }
 
-ll_node *ll_set_at(linked_list *list, size_t index, char *value)
-{
+ll_node *ll_set_at(linked_list *list, size_t index, char *value) {
     if (index >= list->len)
         return NULL;
 
     ll_node *cur = list->head;
     size_t cur_index = 0;
 
-    while (cur)
-    {
-        if (cur_index == index)
-        {
+    while (cur) {
+        if (cur_index == index) {
             free(cur->value);
             cur->value = strdup(value);
             return cur;
@@ -224,15 +205,13 @@ ll_node *ll_set_at(linked_list *list, size_t index, char *value)
     }
 }
 
-ll_node *ll_find_first(linked_list *list, char *value)
-{
+ll_node *ll_find_first(linked_list *list, char *value) {
     if (!list->head)
         return NULL;
 
     ll_node *cur = list->head;
 
-    while (cur)
-    {
+    while (cur) {
         if (!strcmp(value, cur->value))
             return cur;
 
@@ -242,15 +221,13 @@ ll_node *ll_find_first(linked_list *list, char *value)
     return NULL;
 }
 
-ll_node *ll_find_last(linked_list *list, char *value)
-{
+ll_node *ll_find_last(linked_list *list, char *value) {
     if (!list->tail)
         return NULL;
 
     ll_node *cur = list->tail;
 
-    while (cur)
-    {
+    while (cur) {
         if (!strcmp(value, cur->value))
             return cur;
 
@@ -260,20 +237,17 @@ ll_node *ll_find_last(linked_list *list, char *value)
     return NULL;
 }
 
-void ll_display(linked_list *list)
-{
+void ll_display(linked_list *list) {
     ll_node *cur = list->head;
 
-    if (!cur)
-    {
+    if (!cur) {
         printf("[]\n");
         return;
     }
 
     printf("[");
 
-    while (cur->next)
-    {
+    while (cur->next) {
         printf("%s, ", cur->value);
         cur = cur->next;
     }

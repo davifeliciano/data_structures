@@ -1,8 +1,8 @@
 #include "vector.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 vec *vec_new() {
     vec *vector = malloc(sizeof(struct vec));
@@ -32,14 +32,14 @@ vec *vec_clone(vec *vector) {
     return clone;
 }
 
-char *vec_get(vec* vector, size_t index) {
+char *vec_get(vec *vector, size_t index) {
     if (index >= vector->len)
         return NULL;
 
     return vector->elems[index];
 }
 
-char *vec_append(vec* vector, char *value) {
+char *vec_append(vec *vector, char *value) {
     bool vector_is_full = vector->len + 1 > vector->capacity;
     bool vector_cannot_grow = vector->capacity > MAX_CAPACITY - CAPACITY_STEP;
 

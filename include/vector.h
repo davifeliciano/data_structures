@@ -4,7 +4,7 @@
 #define VECTOR
 
 #define MIN_CAPACITY 32
-#define MAX_CAPACITY ((size_t)-1)
+#define MAX_CAPACITY ((size_t) - 1)
 #define CAPACITY_STEP 32
 
 typedef struct vec {
@@ -16,8 +16,8 @@ typedef struct vec {
 vec *vec_new();
 void vec_free(vec *vector);
 vec *vec_clone(vec *vector);
-char *vec_get(vec* vector, size_t index);
-char *vec_append(vec* vector, char *value);
+char *vec_get(vec *vector, size_t index);
+char *vec_append(vec *vector, char *value);
 char *vec_pop(vec *vector);
 char *vec_remove(vec *vector, size_t index);
 void vec_display(vec *vector);
