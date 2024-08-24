@@ -21,10 +21,10 @@ void vec_free(vec *vector) {
 };
 
 vec *vec_clone(vec *vector) {
-    vec *clone = vec_new();
+    vec *clone = malloc(sizeof(struct vec));
     clone->capacity = vector->capacity;
     clone->len = vector->len;
-    clone->elems = realloc(clone->elems, vector->capacity * sizeof(char *));
+    clone->elems = malloc(vector->capacity * sizeof(char *));
 
     for (size_t i = 0; i < vector->len; i++)
         clone->elems[i] = strdup(vector->elems[i]);
