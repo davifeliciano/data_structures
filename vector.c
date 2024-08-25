@@ -12,6 +12,14 @@ vec *vec_new() {
     return vector;
 };
 
+vec *vec_new_with_capacity(size_t capacity) {
+    vec *vector = malloc(sizeof(struct vec));
+    vector->capacity = capacity;
+    vector->len = 0;
+    vector->elems = malloc(vector->capacity * sizeof(char *));
+    return vector;
+}
+
 void vec_free(vec *vector) {
     for (size_t i = 0; i < vector->len; i++)
         free(vector->elems[i]);
@@ -21,10 +29,8 @@ void vec_free(vec *vector) {
 };
 
 vec *vec_clone(vec *vector) {
-    vec *clone = malloc(sizeof(struct vec));
-    clone->capacity = vector->capacity;
+    vec *clone = vec_new_with_capacity(vector->capacity);
     clone->len = vector->len;
-    clone->elems = malloc(vector->capacity * sizeof(char *));
 
     for (size_t i = 0; i < vector->len; i++)
         clone->elems[i] = strdup(vector->elems[i]);
@@ -136,4 +142,51 @@ void vec_insertion_sort(vec *vector) {
 
         vector->elems[j + 1] = key;
     }
+}
+
+static void vec_merge(vec *vector, size_t start, size_t middle, size_t end) {
+    size_t left_len = middle - start;
+    size_t right_len = end - middle;
+    vec *left = vec_new_with_capacity(left_len);
+    vec *right = vec_new_with_capacity(right_len);
+    left->len = left_len;
+    right->len = right_len;
+
+    for (size_t i = 0; i < left->len; i++)
+        left->elems[i] = vector->elems[start + i];
+
+    for (size_t i = 0; i < right->len; i++)
+        right->elems[i] = vector->elems[middle + i];
+
+    size_t i = 0;
+    size_t j = 0;
+
+    for (size_t k = start; k < end; k++) {
+        if (j >= right->len || (i < left->len && strcmp(left->elems[i], right->elems[j]) <= 0)) {
+            vector->elems[k] = left->elems[i];
+            i++;
+        } else {
+            vector->elems[k] = right->elems[j];
+            j++;
+        }
+    }
+
+    free(left->elems);
+    free(left);
+    free(right->elems);
+    free(right);
+}
+
+static void vec_merge_subsort(vec *vector, size_t start, size_t end) {
+    if (start == end - 1)
+        return;
+
+    size_t middle = (start + end) / 2;
+    vec_merge_subsort(vector, start, middle);
+    vec_merge_subsort(vector, middle, end);
+    vec_merge(vector, start, middle, end);
+}
+
+void vec_merge_sort(vec *vector) {
+    vec_merge_subsort(vector, 0, vector->len);
 }

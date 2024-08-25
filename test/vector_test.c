@@ -1,5 +1,5 @@
-#include "vector.h"
 #include "utils.h"
+#include "vector.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,8 +13,7 @@ void test_vec_append() {
     assert(vector->capacity == MIN_CAPACITY);
     assert(vector->len == 0);
 
-    for (size_t i = 0; i < MIN_CAPACITY + 1; i++)
-    {
+    for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
         char *value = generate_random_word(WORD_LEN);
         char *appended = vec_append(vector, value);
         assert(!strcmp(appended, value));
@@ -150,8 +149,19 @@ void test_vec_insertion_sort() {
     printf("ok!\n");
 }
 
-int main(int argc, char **argv)
-{
+void test_vec_merge_sort() {
+    printf("test_vec_merge_sort... ");
+    vec *vector = vec_new();
+    init_rand_vector(vector, MIN_CAPACITY);
+    vec *sorted = vec_clone(vector);
+    vec_merge_sort(sorted);
+    assert_vector_is_sorted(sorted);
+    vec_free(vector);
+    vec_free(sorted);
+    printf("ok!\n");
+}
+
+int main(int argc, char **argv) {
     test_vec_append();
     test_vec_get();
     test_vec_clone();
@@ -159,5 +169,6 @@ int main(int argc, char **argv)
     test_vec_remove();
     test_vec_selection_sort();
     test_vec_insertion_sort();
+    test_vec_merge_sort();
     return 0;
 }

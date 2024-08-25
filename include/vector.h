@@ -14,6 +14,7 @@ typedef struct vec {
 } vec;
 
 vec *vec_new();
+vec *vec_new_with_capacity(size_t capacity);
 void vec_free(vec *vector);
 vec *vec_clone(vec *vector);
 char *vec_get(vec *vector, size_t index);
@@ -23,5 +24,6 @@ char *vec_remove(vec *vector, size_t index);
 void vec_display(vec *vector);
 void vec_selection_sort(vec *vector);
 void vec_insertion_sort(vec *vector);
+void vec_merge_sort(vec *vector);
 
 #endif
