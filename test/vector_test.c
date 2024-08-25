@@ -125,39 +125,31 @@ void assert_vector_is_sorted(vec *vector) {
         assert(strcmp(vec_get(vector, i), vec_get(vector, i + 1)) <= 0);
 }
 
-void test_vec_selection_sort() {
-    printf("test_vec_selection_sort... ");
+void test_vec_sort(void (*sorting_function)(vec *)) {
     vec *vector = vec_new();
     init_rand_vector(vector, MIN_CAPACITY);
     vec *sorted = vec_clone(vector);
-    vec_selection_sort(sorted);
+    sorting_function(sorted);
     assert_vector_is_sorted(sorted);
     vec_free(vector);
     vec_free(sorted);
+}
+
+void test_vec_selection_sort() {
+    printf("test_vec_selection_sort... ");
+    test_vec_sort(&vec_selection_sort);
     printf("ok!\n");
 }
 
 void test_vec_insertion_sort() {
     printf("test_vec_insertion_sort... ");
-    vec *vector = vec_new();
-    init_rand_vector(vector, MIN_CAPACITY);
-    vec *sorted = vec_clone(vector);
-    vec_insertion_sort(sorted);
-    assert_vector_is_sorted(sorted);
-    vec_free(vector);
-    vec_free(sorted);
+    test_vec_sort(&vec_insertion_sort);
     printf("ok!\n");
 }
 
 void test_vec_merge_sort() {
     printf("test_vec_merge_sort... ");
-    vec *vector = vec_new();
-    init_rand_vector(vector, MIN_CAPACITY);
-    vec *sorted = vec_clone(vector);
-    vec_merge_sort(sorted);
-    assert_vector_is_sorted(sorted);
-    vec_free(vector);
-    vec_free(sorted);
+    test_vec_sort(&vec_merge_sort);
     printf("ok!\n");
 }
 
