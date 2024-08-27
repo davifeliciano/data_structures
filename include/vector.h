@@ -25,5 +25,6 @@ void vec_display(vec *vector);
 void vec_selection_sort(vec *vector);
 void vec_insertion_sort(vec *vector);
 void vec_merge_sort(vec *vector);
+void vec_quick_sort(vec *vector);
 
 #endif

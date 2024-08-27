@@ -190,3 +190,30 @@ static void vec_merge_subsort(vec *vector, size_t start, size_t end) {
 void vec_merge_sort(vec *vector) {
     vec_merge_subsort(vector, 0, vector->len);
 }
+
+static size_t vec_partition(vec *vector, size_t start, size_t end) {
+    size_t pivot = start;
+
+    for (size_t i = start; i < end - 1; i++) {
+        if (strcmp(vector->elems[i], vector->elems[end - 1]) <= 0) {
+            vec_swap(vector, i, pivot);
+            pivot++;
+        }
+    }
+
+    vec_swap(vector, pivot, end - 1);
+    return pivot;
+}
+
+static void vec_quick_subsort(vec *vector, size_t start, size_t end) {
+    if (start == end - 1)
+        return;
+
+    size_t pivot = vec_partition(vector, start, end);
+    vec_quick_subsort(vector, start, pivot);
+    vec_quick_subsort(vector, pivot, end);
+}
+
+void vec_quick_sort(vec *vector) {
+    vec_quick_subsort(vector, 0, vector->len);
+}

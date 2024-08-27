@@ -153,6 +153,12 @@ void test_vec_merge_sort() {
     printf("ok!\n");
 }
 
+void test_vec_quick_sort() {
+    printf("test_vec_quick_sort... ");
+    test_vec_sort(&vec_quick_sort);
+    printf("ok!\n");
+}
+
 int main(int argc, char **argv) {
     test_vec_append();
     test_vec_get();
@@ -162,5 +168,6 @@ int main(int argc, char **argv) {
     test_vec_selection_sort();
     test_vec_insertion_sort();
     test_vec_merge_sort();
+    test_vec_quick_sort();
     return 0;
 }
