@@ -1,9 +1,9 @@
+#ifndef HASH_TABLE
+#define HASH_TABLE
+
 #include "bst.h"
 #include "komihash.h"
 #include <stdlib.h>
-
-#ifndef HASH_TABLE
-#define HASH_TABLE
 
 #define MIN_CAPACITY 8
 #define MAX_CAPACITY ((size_t) - 1)

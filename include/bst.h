@@ -1,7 +1,7 @@
-#include <stdbool.h>
-
 #ifndef BST
 #define BST
+
+#include <stdbool.h>
 
 typedef struct bst {
     struct bst_node *root;

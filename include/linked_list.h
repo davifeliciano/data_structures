@@ -1,7 +1,7 @@
-#include <stdlib.h>
-
 #ifndef LINKED_LIST
 #define LINKED_LIST
+
+#include <stdlib.h>
 
 typedef struct ll_node {
     char *value;

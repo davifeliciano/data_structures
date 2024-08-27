@@ -1,7 +1,7 @@
-#include <stdlib.h>
-
 #ifndef VECTOR
 #define VECTOR
+
+#include <stdlib.h>
 
 #define MIN_CAPACITY 32
 #define MAX_CAPACITY ((size_t) - 1)
