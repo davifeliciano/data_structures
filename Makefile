@@ -1,9 +1,9 @@
 CC = gcc
 FLAGS = -g -I include
 
-SOURCEDIR = .
+SOURCEDIR = ./src
 BUILDDIR = ./build
-TESTDIR = $(SOURCEDIR)/test
+TESTDIR = ./test
 
 dir:
 	mkdir -p $(BUILDDIR)
