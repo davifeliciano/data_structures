@@ -8,17 +8,19 @@ TESTDIR = ./test
 dir:
 	mkdir -p $(BUILDDIR)
 
-test: $(BUILDDIR)/linked_list_test $(BUILDDIR)/bst_test $(BUILDDIR)/hash_table_test $(BUILDDIR)/vector_test
+test: $(BUILDDIR)/linked_list_test $(BUILDDIR)/bst_test $(BUILDDIR)/hash_table_test $(BUILDDIR)/vector_test $(BUILDDIR)/generic_vector_test
 	$(BUILDDIR)/linked_list_test
 	$(BUILDDIR)/bst_test
 	$(BUILDDIR)/hash_table_test
 	$(BUILDDIR)/vector_test
+	$(BUILDDIR)/generic_vector_test
 
 memtest: $(BUILDDIR)/linked_list_test $(BUILDDIR)/bst_test $(BUILDDIR)/hash_table_test $(BUILDDIR)/vector_test
 	valgrind $(BUILDDIR)/linked_list_test
 	valgrind $(BUILDDIR)/bst_test
 	valgrind $(BUILDDIR)/hash_table_test
 	valgrind $(BUILDDIR)/vector_test
+	valgrind $(BUILDDIR)/generic_vector_test
 
 $(BUILDDIR)/utils.o: dir $(SOURCEDIR)/utils.c
 	$(CC) $(FLAGS) -c $(SOURCEDIR)/utils.c -o $(BUILDDIR)/utils.o
@@ -46,6 +48,12 @@ $(BUILDDIR)/vector.o: dir $(SOURCEDIR)/vector.c
 
 $(BUILDDIR)/vector_test: dir $(BUILDDIR)/utils.o $(BUILDDIR)/vector.o $(TESTDIR)/vector_test.c
 	$(CC) $(FLAGS) $(BUILDDIR)/utils.o $(BUILDDIR)/vector.o $(TESTDIR)/vector_test.c -o $(BUILDDIR)/vector_test
+
+$(BUILDDIR)/generic_vector.o: dir $(SOURCEDIR)/generic_vector.c
+	$(CC) $(FLAGS) -c $(SOURCEDIR)/generic_vector.c -o $(BUILDDIR)/generic_vector.o
+
+$(BUILDDIR)/generic_vector_test: dir $(BUILDDIR)/utils.o $(BUILDDIR)/generic_vector.o $(TESTDIR)/generic_vector_test.c
+	$(CC) $(FLAGS) $(BUILDDIR)/utils.o $(BUILDDIR)/generic_vector.o $(TESTDIR)/generic_vector_test.c -o $(BUILDDIR)/generic_vector_test
 
 clean:
 	rm -rf $(BUILDDIR)
