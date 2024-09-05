@@ -28,6 +28,28 @@ void test_vec_append() {
     printf("ok!\n");
 }
 
+void test_vec_insert_at() {
+    printf("test_vec_insert_at... ");
+    vec *vector = vec_new();
+    assert(vector->capacity == MIN_CAPACITY);
+    assert(vector->len == 0);
+
+    for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
+        char *value = generate_random_word(WORD_LEN);
+        char *inserted = vec_insert_at(vector, vector->len, value);
+        assert(!vec_insert_at(vector, vector->len + 1, value));
+        assert(!strcmp(inserted, value));
+        assert(!strcmp(inserted, vector->elems[i]));
+        assert(vector->len == i + 1);
+        free(value);
+    }
+
+    assert(vector->len == MIN_CAPACITY + 1);
+    assert(vector->capacity == MIN_CAPACITY + CAPACITY_STEP);
+    vec_free(vector);
+    printf("ok!\n");
+}
+
 void test_vec_get() {
     printf("test_vec_get... ");
     vec *vector = vec_new();
@@ -161,6 +183,7 @@ void test_vec_quick_sort() {
 
 int main(int argc, char **argv) {
     test_vec_append();
+    test_vec_insert_at();
     test_vec_get();
     test_vec_clone();
     test_vec_pop();

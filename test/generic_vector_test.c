@@ -26,6 +26,31 @@ void test_gen_vec_append() {
     printf("ok!\n");
 }
 
+void test_gen_vec_insert_at() {
+    printf("test_gen_vec_insert_at... ");
+    gen_vec *vector = gen_vec_new(sizeof(char *));
+    assert(vector->capacity == MIN_CAPACITY);
+    assert(vector->len == 0);
+
+    for (size_t i = 0; i < MIN_CAPACITY + 1; i++) {
+        char *value = generate_random_word(WORD_LEN);
+        char *inserted = gen_vec_insert_at(vector, vector->len, value);
+        assert(!gen_vec_insert_at(vector, vector->len + 1, value));
+        assert(inserted == value);
+        assert(inserted == vector->elems[i]);
+        assert(vector->len == i + 1);
+    }
+
+    assert(vector->len == MIN_CAPACITY + 1);
+    assert(vector->capacity == MIN_CAPACITY + CAPACITY_STEP);
+
+    for (size_t i = 0; i < vector->len + 1; i++)
+        free(gen_vec_get(vector, i));
+
+    gen_vec_free(vector);
+    printf("ok!\n");
+}
+
 void test_gen_vec_get() {
     printf("test_gen_vec_get... ");
     gen_vec *vector = gen_vec_new(sizeof(char *));
@@ -120,6 +145,7 @@ void test_gen_vec_swap() {
 
 int main(int argc, char **argv) {
     test_gen_vec_append();
+    test_gen_vec_insert_at();
     test_gen_vec_get();
     test_gen_vec_pop();
     test_gen_vec_remove();

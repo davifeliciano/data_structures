@@ -33,21 +33,40 @@ void *gen_vec_get(gen_vec *vector, size_t index) {
     return vector->elems[index];
 }
 
-void *gen_vec_append(gen_vec *vector, void *value) {
+static bool gen_vec_grow_if_full(gen_vec *vector) {
     bool vector_is_full = vector->len + 1 > vector->capacity;
     bool vector_cannot_grow = vector->capacity > MAX_CAPACITY - CAPACITY_STEP;
 
     if (vector_is_full && vector_cannot_grow)
-        return NULL;
+        return false;
 
     if (vector_is_full) {
         vector->capacity = vector->capacity + CAPACITY_STEP;
-        vector->elems = realloc(vector->elems, vector->capacity * vector->elem_size);
+        vector->elems = realloc(vector->elems, vector->capacity * sizeof(char *));
     }
+
+    return true;
+}
+
+void *gen_vec_append(gen_vec *vector, void *value) {
+    if (!gen_vec_grow_if_full(vector))
+        return NULL;
 
     vector->elems[vector->len] = value;
     vector->len++;
     return vector->elems[vector->len - 1];
+}
+
+void *gen_vec_insert_at(gen_vec *vector, size_t index, void *value) {
+    if (index > vector->len || !gen_vec_grow_if_full(vector))
+        return NULL;
+
+    for (size_t i = vector->len; i > index; i--)
+        vector->elems[i] = vector->elems[i - 1];
+
+    vector->elems[index] = value;
+    vector->len++;
+    return vector->elems[index];
 }
 
 void *gen_vec_pop(gen_vec *vector) {

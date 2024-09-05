@@ -45,21 +45,40 @@ char *vec_get(vec *vector, size_t index) {
     return vector->elems[index];
 }
 
-char *vec_append(vec *vector, char *value) {
+static bool vec_grow_if_full(vec *vector) {
     bool vector_is_full = vector->len + 1 > vector->capacity;
     bool vector_cannot_grow = vector->capacity > MAX_CAPACITY - CAPACITY_STEP;
 
     if (vector_is_full && vector_cannot_grow)
-        return NULL;
+        return false;
 
     if (vector_is_full) {
         vector->capacity = vector->capacity + CAPACITY_STEP;
         vector->elems = realloc(vector->elems, vector->capacity * sizeof(char *));
     }
 
+    return true;
+}
+
+char *vec_append(vec *vector, char *value) {
+    if (!vec_grow_if_full(vector))
+        return NULL;
+
     vector->elems[vector->len] = strdup(value);
     vector->len++;
     return vector->elems[vector->len - 1];
+}
+
+char *vec_insert_at(vec *vector, size_t index, char *value) {
+    if (index > vector->len || !vec_grow_if_full(vector))
+        return NULL;
+
+    for (size_t i = vector->len; i > index; i--)
+        vector->elems[i] = vector->elems[i - 1];
+
+    vector->elems[index] = strdup(value);
+    vector->len++;
+    return vector->elems[index];
 }
 
 char *vec_pop(vec *vector) {

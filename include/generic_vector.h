@@ -20,6 +20,7 @@ void gen_vec_free(gen_vec *vector);
 gen_vec *gen_vec_clone(gen_vec *vector);
 void *gen_vec_get(gen_vec *vector, size_t index);
 void *gen_vec_append(gen_vec *vector, void *value);
+void *gen_vec_insert_at(gen_vec *vector, size_t index, void *value);
 void *gen_vec_pop(gen_vec *vector);
 void *gen_vec_remove(gen_vec *vector, size_t index);
 void gen_vec_swap(gen_vec *vector, size_t left, size_t right);
